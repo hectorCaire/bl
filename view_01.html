@@ -1,0 +1,199 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="view01-element">
+  <template>
+    <style>
+      :root{
+        --text-color:#666;
+        --main-color:#2484cc
+      }
+      :host {
+        display: block;
+      }
+
+      h2{
+        color:var(--main-color);
+        font-weight: normal;
+      }
+
+      ul.phone-numbers{
+        list-style: none;
+        margin: 20px auto;
+        padding:0;
+      }
+
+      ul.phone-numbers li{
+        color:var(--text-color);
+        margin:10px 0;
+        height: 66px;
+        padding-left: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items:center;
+        cursor: pointer;
+        box-sizing: border-box;
+      }
+
+      .my-telephone-numbrer{
+        background: url("img/phone-hq.png") left no-repeat;
+        background-size: 65px
+      }
+
+
+      .add-telephone{
+        background: url("img/add-phone-hq.png") left no-repeat;
+        background-size: 65px
+      }
+
+      .arrow{
+        width:25px;
+        color: var(--text-color);
+        height: 66px;
+        background: url("img/arrow.png") left no-repeat;
+      }
+
+      .list-item{
+        display:inline-block;
+
+      }
+
+      .search{
+        display:flex;
+        justify-content: space-between;
+        align-items:center;
+      }
+
+      paper-input{
+        width: 100%;
+      }
+
+      .btn-search{
+        width: 30px;
+        height: 30px;
+        border:0;
+        cursor:pointer;
+
+      }
+
+
+    </style>
+    <div>
+      <h2>Tiempo aire para</h2>
+      <ul class="phone-numbers">
+        <li class="my-telephone-numbrer" on-click="myTelephoneNumber">
+          <div class="list-item" >
+            <label>Mi teléfono</label>
+            <br />
+            <label>{{telephoneNumber}}</label>
+          </div>
+          <div class="arrow"/>
+        </li>
+        <li class="add-telephone" on-click="newTelephoneNumber">
+          <div class="list-item">
+            <label>Nuevo teléfono</label>
+          </div>
+          <div class="arrow"/>
+        </li>
+      </ul>
+      <h3>Números guardados ({{contacts.length}})</h3>
+      <div class="search">
+        <paper-input label="Buscar contacto"></paper-input>
+        <paper-button class="btn-search"></paper-button>
+      </div>
+      <ul class="phone-numbers">
+        <template is="dom-repeat" items="[[contacts]]" as="contact">
+          <li class="my-telephone-numbrer" value="[[contact.id]]" on-click="contactTelephoneNumber">
+            <div class="list-item">
+              <label>{{contact.name}}</label>
+              <br />
+              <label>{{contact.phone-number}}</lablel>
+              <br />
+              <label>{{phoneCompany(contact.phone-company)}}</label>
+            </div>
+            <div class="arrow"/>
+          </li>
+        </template>
+      </ul>
+
+    </div>
+  </template>
+
+  <script>
+
+
+
+    /**
+     * `bl-element`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class View01Element extends Polymer.Element {
+      static get is() { return 'view01-element'; }
+      static get properties() {
+        return {
+          telephoneNumber:{
+            type:String,
+            value:''
+          },
+          contacts:{
+            type:Array,
+            value:[]
+          }
+        }
+      }
+
+      phoneCompany(idCompany){
+        let company='';
+        switch (idCompany){
+          case 1:
+            company='TELCEL';
+            break;
+          case 2:
+            company='MOVISTAR';
+            break;
+          case 3:
+            company='AT&T';
+            break;
+          case 4:
+            company='UNEFON';
+            break;
+
+        }
+        return company;
+      }
+
+      newTelephoneNumber(){
+        this.dispatchEvent(new CustomEvent('new-telephone-number',{
+          bubbles: true,
+          composed: true,
+          detail: null
+        }));
+      }
+
+
+      myTelephoneNumber(){
+        this.dispatchEvent(new CustomEvent('my-telephone-number',{
+          bubbles: true,
+          composed: true,
+          detail: null
+        }));
+      }
+
+      contactTelephoneNumber(event){
+        this.dispatchEvent(new CustomEvent('contact-telephone-number',{
+          bubbles: true,
+          composed: true,
+          detail: {'id':event.target.value}
+        }));
+      }
+
+    }
+
+    window.customElements.define(View01Element.is, View01Element);
+  </script>
+</dom-module>

@@ -1,0 +1,105 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="view06-element">
+  <template>
+    <style>
+
+    .data{
+      display:grid;
+      border-radius: 5px;
+      border: 1px solid #666;
+      grid-template-columns: 50% auto;
+    }
+    .data label{
+      border-bottom: 1px solid #666;
+    }
+
+    .btn_confirm{
+      background: #79b5e2;
+      border-radius: 5px;
+      border:none;
+      color:#fff;
+      width: 100%;
+      margin:10px 0;
+    }
+    </style>
+    <div>
+      <h2>Alta frecuentes</h2>
+      <div class="data">
+          <label >Cuenta del retiro</label>
+          <label >[[trimedAcount]]</label>
+          <label >Número de celular</label>
+          <label>[[recipient.telephoneNumber]]</label>
+          <label>Compañía celular</label>
+          <label >[[telephoneCompany]]</label>
+      </div>
+      <paper-input label="Nombre" value="{{recipient.name}}"></paper-input>
+      <paper-button class="btn_confirm" on-click="confirmSave">Confirmar</paper-button>
+    </div>
+  </template>
+  <script>
+    class View06Element extends Polymer.Element{
+      static get is(){return 'view06-element'}
+      static get properties(){
+        return{
+          recipient:{
+            type:Object,
+            value:{}
+          },
+          acountNumber:{
+            type:String,
+            value:''
+          },
+          telephoneCompany:{
+            type:String,
+            computed: 'phoneCompany(recipient.telephoneCompany)'
+          },
+          trimedAcount:{
+            type:String,
+            computed: 'trimAcount(acountNumber)'
+          },
+        }
+      }
+
+      phoneCompany(idCompany){
+        let company='';
+        switch (idCompany){
+          case 1:
+            company='TELCEL';
+            break;
+          case 2:
+            company='MOVISTAR';
+            break;
+          case 3:
+            company='AT&T';
+            break;
+          case 4:
+            company='UNEFON';
+            break;
+        }
+
+        return company;
+      }
+
+      trimAcount(acountNumber){
+        const result=acountNumber.substr(acountNumber.length-5,acountNumber.length);
+        return `*${result}`;
+      }
+
+      confirmSave(){
+        console.log('save');
+        this.dispatchEvent(new CustomEvent('confirm-save',{
+          bubbles:true,
+          composed:true,
+          detail:{"recipient":this.recipient}
+        }));
+      }
+
+
+    }
+
+    window.customElements.define(View06Element.is,View06Element);
+  </script>
+</dom-module>

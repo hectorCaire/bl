@@ -1,0 +1,89 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<dom-module id="token-element">
+  <template>
+    <style>
+      :host{
+
+      }
+
+      :root{
+        --text-color:#666;
+        --main-color:#2484cc
+      }
+
+      h2{
+        color:var(--main-color);
+      }
+
+      #box{
+        background: #f6f6f6;
+        padding:10px;
+        width: 100%;
+        box-sizing: border-box;
+
+      }
+      #box label{
+        color:var(--text-color);
+      }
+
+      .input{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .input img{
+        height: 22px;
+      }
+
+      .input paper-input{
+        flex-grow:2;
+        margin-right:15px;
+      }
+
+      .btn_confirm{
+        background: #79b5e2;
+        border-radius: 5px;
+        border:none;
+        color:#fff;
+        width: 100%;
+        margin:10px 0;
+      }
+    </style>
+    <div id="box">
+      <h2>Código de seguridad</h2>
+      <div class="input">
+        <paper-input value="{{tokenNumber}}" maxlength="10" minlength="10" auto-validate pattern="[\d]*"></paper-input>
+        <img src="../img/secure.png" class="secure"/>
+      </div>
+      <label>Para obtener el código de seguridad en tu Token: Encíendelo y presiona el botón "Código"</label>
+    </div>
+    <paper-button class="btn_confirm" on-click="postConfirmation">Confirmar</paper-button>
+  </template>
+  <script>
+    class TokenElement extends Polymer.Element{
+      static get is(){return 'token-element'}
+      static get properties(){
+        return {
+          tokenNumber:{
+            type:String,
+            value:''
+          }
+        }
+      }
+
+      postConfirmation(){
+        this.dispatchEvent(new CustomEvent('purchase-confirmation',{
+          bubbles:true,
+          composed:true,
+          detail:{
+            "tokenNumber":this.tokenNumber
+          }
+        }));
+      }
+    }
+    window.customElements.define(TokenElement.is,TokenElement);
+  </script>
+</dom-module>

@@ -1,0 +1,77 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="token.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<dom-module id="view04-element">
+  <template>
+    <style>
+
+    :root{
+      --text-color:#666;
+      --main-color:#2484cc;
+
+    }
+
+    h2{
+      color:var(--main-color);
+    }
+      .logo{
+        width: 70px;
+        height: 70px;
+        border-radius: 35px;
+        background: #e5f5fc;
+        border:1px solid var(--main-color);
+        margin:10px auto;
+        display:flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .content{
+        display:flex;
+         flex-direction:column;
+        align-items: center;
+      }
+
+      label{
+        color:#666;
+      }
+    </style>
+    <div class="content">
+      <label>[[recipient.name]]</label>
+      <label>[[recipient.telephoneNumber]]</label>
+      <div class="logo">
+        <img src="../img/lgo_[[recipient.telephoneCompany]].png">
+      </div>
+      <label>Importe</label>
+      <h2>$[[amount]]</h2>
+      <token-element ></token-element>
+    </div>
+  </template>
+  <script>
+
+  class View04Element extends Polymer.Element{
+    static get is(){return 'view04-element';}
+    static get properties(){
+      return {
+        recipient:{
+          type:Object,
+          value:{}
+        },
+        amount:{
+          type:Number,
+          value:0
+        },
+        mode:{
+          type:Number,
+          value:null
+        }
+
+      }
+    }
+
+  }
+
+
+  window.customElements.define(View04Element.is, View04Element);
+  </script>
+</dom-module>

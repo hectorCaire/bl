@@ -1,0 +1,142 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="view03-element">
+  <template>
+    <style>
+    :root{
+      --text-color:#666;
+      --main-color:#2484cc
+    }
+    h2{
+      color:var(--main-color);
+      font-weight: normal;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .acount{
+      background: #f4f4f4;
+      text-align: center;
+      padding: 5px;
+      margin:5px auto;
+      font-weight: bold;
+      color:var(--text-color);
+    }
+
+    .recipient{
+      background: #d4edfc;
+      display: flex;
+      padding: 15px 10px;
+      justify-content: space-between;
+      margin:5px auto;
+      align-items:center;
+      color:var(--text-color);
+      flex-wrap: wrap;
+    }
+
+    .amount{
+      border:1px solid var(--main-color);
+      color:var(--main-color);
+      margin-top: 5px;
+      margin-bottom: 5px;
+      width: 100px;
+      padding:15px auto;
+    }
+
+    .amounts{
+      display: flex;
+      justify-content:space-between;
+      flex-wrap: wrap;
+    }
+
+
+
+    </style>
+    <div>
+      <h2>{{title}}</h2>
+      <div class="acount">
+        <label>No. de cuenta {{acountNumber}}</label>
+        <br />
+        <label>{{acountBalance}}</label>
+      </div>
+      <div class="recipient">
+        <div>
+          <label>[[recipient.name]]</label>
+          <br />
+          <label>[[recipient.telephoneNumber]]</label>
+        </div>
+        <div class="telephoneCompany">
+          <img src="../img/lgo_[[recipient.telephoneCompany]].png" />
+        </div>
+      </div>
+      <div class="amounts">
+        <template is="dom-repeat" items="[[amounts]]" as="amount">
+          <paper-button value="[[amount]]" class="amount" on-click="postAmount">$[[amount]]</paper-button>
+        </template>
+
+      </div>
+    </div>
+
+  </template>
+  <script>
+
+
+    class View03Element extends Polymer.Element{
+      static get is(){ return 'view03-element';}
+      static get properties(){
+        return{
+          title:{
+            type:String,
+             computed: 'computeTitle(mode)'
+          },
+          recipient:{
+            type:Object,
+            value:{}
+          },
+          acountNumber:{
+            type:String,
+            value:''
+          },
+          acountBalance:{
+            type:Number,
+            value:0
+          },
+          mode:{
+            type:Number,
+            value:null
+          },
+          amounts:{
+            type:Array,
+            value:[
+              30,50,100,
+              150,200,300,
+              500
+            ]
+          }
+        }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      computeTitle(mode){
+        return (mode===MODES.MY_NUMBER)?'Mi teléfono':'Mis Contactos';
+      }
+
+      postAmount(event){
+        let value= event.target.value;
+        this.dispatchEvent(new CustomEvent('post-amount',{
+          bubbles: true,
+          composed: true,
+          detail: {"amount":value}
+        }));
+
+      }
+
+    }
+
+    window.customElements.define(View03Element.is, View03Element);
+  </script>
+</dom-module>

@@ -1,0 +1,46 @@
+{
+  "contacts": [
+    {
+      "name": "Prueba",
+      "phone-number": "55392919",
+      "phone-company": 1,
+      "id": 1
+    },
+    {
+      "name": "Prueba 2",
+      "phone-number": "55295812",
+      "phone-company": 1,
+      "id": 2
+    },
+    {
+      "name": "Prueba 3",
+      "phone-number": "53891412",
+      "phone-company": 1,
+      "id": 3
+    },
+    {
+      "name": "Prueba 4",
+      "phone-number": "40968282",
+      "phone-company": 3,
+      "id": 4
+    },
+    {
+      "name": "Prueba 5",
+      "phone-number": "552858272",
+      "phone-company": 2,
+      "id": 5
+    },
+    {
+      "name": "Pedrito",
+      "phone-number": "5548484848",
+      "phone-company": "3",
+      "id": 6
+    },
+    {
+      "name": "Agustina",
+      "phone-number": "5558937272",
+      "phone-company": 4,
+      "id": 7
+    }
+  ]
+}

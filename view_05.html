@@ -1,0 +1,169 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="view05-element">
+<template>
+  <style>
+    .content{
+      display:flex;
+      flex-direction:column;
+      align-items: center;
+    }
+
+    .review{
+      background:#b5e5f9;
+      border-radius: 5px;
+      color:#666;
+      display:grid;
+      grid-gap:5px;
+      grid-template-columns: 60% auto;
+      padding:10px;
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    .buttonsContainer{
+      display: flex;
+      justify-content:space-around;
+      align-items:center;
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    .review label{
+      margin:5px 0;
+    }
+
+    h2{
+      color:#6cd331;
+    }
+
+    .amount{
+      color:#2484cc;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .btn-menu{
+      background: #79b5e2;
+      border-radius: 5px;
+      border:none;
+      color:#fff;
+      width: 100%;
+      margin:10px 0;
+    }
+
+
+  </style>
+  <div class="content">
+    <h2>Operación exitosa</h2>
+    <h3>[[recipient.name]]</h3>
+    <label>[[recipient.telephoneNumber]]</label>
+    <br />
+    <label>Importe</label>
+    <label class="amount">$[[transactionAmount]]</label>
+    <div class="review">
+      <label >Cuenta del retiro</label>
+      <label >[[trimedAcount]]</label>
+      <label >Compañía</label>
+      <label >[[telephoneCompany]]</label>
+      <label >Fecha de operación</label>
+      <label >[[transactionDate]]</label>
+      <label >Hora de operación</label>
+      <label >[[transactionHour]]</label>
+      <label >Folio</label>
+      <label >[[folioNumber]]</label>
+    </div>
+    <div class="buttonsContainer">
+      <template is="dom-if" if="{{isNewContact}}">
+        <paper-button class="savePhone" on-click="saveNumber">Guardar Teléfono</paper-button>
+      </template>
+
+
+      <paper-button class="share">Compartir</paper-button>
+    </div>
+    <paper-button on-click="goFirstStep" class="btn-menu">Menú</paper-button>
+  </div>
+</template>
+<script>
+class View05Element extends Polymer.Element{
+  static get is(){return 'view05-element'}
+  static get properties(){
+    return {
+      recipient:{
+        type:Object,
+        value:{}
+      },
+      transactionAmount:{
+        type:Number,
+        value:null
+      },
+      acountNumber:{
+        type:String,
+        value:''
+      },
+      transactionDae:{
+        type:String,
+        value:''
+      },
+      transactionHour:{
+        type:String,
+        value:''
+      },
+      telephoneCompany:{
+        type:String,
+        computed: 'phoneCompany(recipient.telephoneCompany)'
+      },
+      trimedAcount:{
+        type:String,
+        computed: 'trimAcount(acountNumber)'
+      },
+      mode:{
+        type:Number,
+        value:null
+      },
+      isNewContact:{
+        type:Boolean,
+        value:null
+      }
+    }
+  }
+
+  phoneCompany(idCompany){
+    let company='';
+    switch (idCompany){
+      case 1:
+        company='TELCEL';
+        break;
+      case 2:
+        company='MOVISTAR';
+        break;
+      case 3:
+        company='AT&T';
+        break;
+      case 4:
+        company='UNEFON';
+        break;
+    }
+
+    return company;
+  }
+
+  trimAcount(acountNumber){
+    const result=acountNumber.substr(acountNumber.length-5,acountNumber.length);
+    return `*${result}`;
+  }
+
+  saveNumber(){
+    this.dispatchEvent(new CustomEvent('save-number',{
+      bubbles:true,
+      composed:true,
+      detail:{
+      }
+    }));
+  }
+
+  }
+window.customElements.define(View05Element.is, View05Element);
+</script>
+</dom-module>

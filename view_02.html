@@ -1,0 +1,132 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-button-group/paper-button-group.html">
+
+
+<dom-module id="view02-element">
+  <template>
+    <style>
+      :root{
+        --text-color:#666;
+        --main-color:#2484cc
+      }
+      :host {
+        display: block;
+      }
+
+      h2{
+        color:var(--main-color);
+        font-weight: normal;
+      }
+
+
+      paper-input{
+        width: 100%;
+      }
+
+      label{
+        color:var(--text-color);
+      }
+
+      .btn_confirm{
+        background: #79b5e2;
+        border-radius: 5px;
+        border:none;
+        color:#fff;
+        width: 100%;
+        margin:10px 0;
+      }
+
+      .btn_group{
+        display:flex;
+        justify-content:space-between;
+        flex-wrap: wrap;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 0;
+        margin: 10px 0;
+      }
+
+      .btn_group paper-button{
+        margin:0;
+        width:80px;
+        height: 80px;
+      }
+
+
+
+      .logo{
+        width: 70px;
+        heigth:70px;
+        margin:5px;
+      }
+
+      .iron-selected{
+        background-color: #006bc4;
+      }
+
+    </style>
+    <div>
+      <h2>Nuevo teléfono</h2>
+      <paper-input label="Número de celular (10) dígitos" maxlength="10" minlength="10" value="{{recipient.telephoneNumber}}" auto-validate pattern="[\d]*"></paper-input>
+      <paper-input label="Nombre del beneficiario" value="{{recipient.name}}"></paper-input>
+      <h3>Selecciona la compañía celular</h3>
+      <paper-button-group class="btn_group" attr-for-selected="value" selected="{{telephoneCompany}}">
+        <paper-button value="1"><img src="../img/lgo_telcel.png" class="logo"/></paper-button>
+        <paper-button  value="2"><img src="../img/lgo_movistar.png" class="logo"/></paper-button>
+        <paper-button  value="3"><img src="../img/lgo_atnt.png" class="logo"/></paper-button>
+        <paper-button  value="4"><img src="../img/lgo_unefon.png" class="logo"/></paper-button>
+      </paper-button-group>
+      <label>A continuación se registrará la operación</label>
+      <paper-button class="btn_confirm" on-click="_contactCreated">Confirmar</paper-button>
+    </div>
+  </template>
+  <script>
+    class View02Element extends Polymer.Element {
+      static get is() { return 'view02-element'; }
+      static get properties() {
+        return {
+          telephoneNumber:{
+            type:String,
+            value:''
+          },
+          telephoneCompany:{
+            type:Number,
+            value:1
+          },
+          telephoneNumber:{
+            type:String,
+            value:''
+          },
+          contactName:{
+            type:String,
+            value:''
+          },
+          recipient:{
+            type:Object,
+            value:{}
+          },
+          mode:{
+            type:String,
+            value:''
+          }
+        }
+      }
+      _contactCreated(){
+        this.set('recipient.telephoneCompany',parseInt(this.telephoneCompany));
+        this.dispatchEvent(new CustomEvent('new-contact-event',{
+          bubbles:true,
+          composed:true,
+          detail:this.recipient
+        }));
+      }
+
+  }
+
+  window.customElements.define(View02Element.is, View02Element);
+
+
+
+  </script>
+</dom-module>
