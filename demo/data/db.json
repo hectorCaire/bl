@@ -33,7 +33,7 @@
     {
       "name": "Pedrito",
       "phone-number": "5548484848",
-      "phone-company": "3",
+      "phone-company": 3,
       "id": 6
     },
     {
@@ -41,6 +41,24 @@
       "phone-number": "5558937272",
       "phone-company": 4,
       "id": 7
+    },
+    {
+      "name": "Raul Camacho",
+      "phone-number": "5593838383",
+      "phone-company": 3,
+      "id": 8
+    },
+    {
+      "name": "Pedro López",
+      "phone-number": "5594949494",
+      "phone-company": 3,
+      "id": 9
+    },
+    {
+      "name": "Renato Gonzalez",
+      "phone-number": "5583646464",
+      "phone-company": 2,
+      "id": 10
     }
   ]
 }

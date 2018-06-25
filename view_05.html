@@ -53,6 +53,9 @@
       margin:10px 0;
     }
 
+    .savePhone{
+      color:#2484cc;
+    }
 
   </style>
   <div class="content">
@@ -74,14 +77,11 @@
       <label >Folio</label>
       <label >[[folioNumber]]</label>
     </div>
-    <div class="buttonsContainer">
-      <template is="dom-if" if="{{isNewContact}}">
+    <template is="dom-if" if="{{isNewContact}}">
+      <div class="buttonsContainer">
         <paper-button class="savePhone" on-click="saveNumber">Guardar Teléfono</paper-button>
-      </template>
-
-
-      <paper-button class="share">Compartir</paper-button>
-    </div>
+      </div>
+    </template>
     <paper-button on-click="goFirstStep" class="btn-menu">Menú</paper-button>
   </div>
 </template>
@@ -160,6 +160,14 @@ class View05Element extends Polymer.Element{
       composed:true,
       detail:{
       }
+    }));
+  }
+
+  goFirstStep(){
+    this.dispatchEvent(new CustomEvent('reset',{
+      bubbles:true,
+      composed:true,
+      detail:null
     }));
   }
 

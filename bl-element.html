@@ -54,7 +54,7 @@
       <view02-element on-new-contact-event="createContact" mode="{{mode}}"  recipient="{{recipient}}"></view02-element>
       <view03-element acount-number="[[acountNumber]]" acount-balance="[[acountBalance]]" mode="{{mode}}" recipient="{{recipient}}" on-post-amount="confirmPurchase"></view03-element>
       <view04-element mode="[[mode]]" recipient="[[recipient]]" amount="[[amount]]" on-purchase-confirmation="purchaseConfirmation" on-purchase-failed="purchaseFailed"></view04-element>
-      <view05-element is-new-contact="{{isNewContact}}" acount-number="[[acountNumber]]" recipient="[[recipient]]" transaction-amount="[[amount]]" transaction-date="[[transactionDate]]" transaction-hour="[[transactionHour]]" folio-number="[[folioNumber]]" on-save-number="saveNumber"></view05-element>
+      <view05-element is-new-contact="{{isNewContact}}" acount-number="[[acountNumber]]" recipient="[[recipient]]" transaction-amount="[[amount]]" transaction-date="[[transactionDate]]" transaction-hour="[[transactionHour]]" folio-number="[[folioNumber]]" on-save-number="saveNumber" on-reset="reset"></view05-element>
       <view06-element acount-number="[[acountNumber]]" recipient="{{recipient}}" on-confirm-save="saveRecipient"></view06-element>
     </iron-pages>
     <paper-dialog id="messageModal" modal>
@@ -136,7 +136,7 @@
           },
           isNewContact:{
             type:Boolean,
-            computed: false
+            value: false
           }
 
         }
@@ -263,6 +263,13 @@
             return contact
           }
         }
+      }
+
+      reset(){
+        let pages = this.$.pages;
+        this.recipient={};
+        this.isNewContact=false;
+        pages.select(0);
       }
     }
 
